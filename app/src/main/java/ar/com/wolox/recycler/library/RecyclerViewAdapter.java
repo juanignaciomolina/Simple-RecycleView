@@ -3,6 +3,7 @@ package ar.com.wolox.recycler.library;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public abstract class RecyclerViewAdapter<E> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -42,7 +43,7 @@ public abstract class RecyclerViewAdapter<E> extends RecyclerView.Adapter<Recycl
         notifyItemInserted(position);
     }
 
-    public void addItemsArray(ArrayList<E> itemsArray) {
+    public void addAllItems(Collection<E> itemsArray) {
         for(E item : itemsArray) {
             addItem(item);
         }
