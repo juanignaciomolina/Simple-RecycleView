@@ -89,11 +89,13 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     //** Start of LOADERS **
 
+    @SuppressWarnings("unchecked")
     public void addLoadingRow(int position) {
         this.addItemToPos(position, (E) mItemsInstance.create());
         mLoaders.add(position);
     }
 
+    @SuppressWarnings("unchecked")
     public void addLoadingRow() {
         this.addItem((E) mItemsInstance.create());
         mLoaders.add(getItemCount() - 1);
