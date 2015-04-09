@@ -90,13 +90,12 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     //** Start of LOADERS **
 
-    //TODO reactivar esto cuando ande lo demas
-    public void addLoadingRow(int position) throws Exception {
+    public void addLoadingRow(int position) {
         this.addItemToPos(position, (E) mItemsInstance.create());
         mLoaders.add(position);
     }
 
-    public void addLoadingRow() throws IllegalAccessException, InstantiationException {
+    public void addLoadingRow() {
         Log.d("AdapterRecycler", String.valueOf(getItemCount()));
         this.addItem((E) mItemsInstance.create());
         Log.d("AdapterRecycler", String.valueOf(getItemCount()));
@@ -116,7 +115,7 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
         }
     }
 
-    public void removeLoadingRowByPos(int position) {
+    protected void removeLoadingRowByPos(int position) {
         mLoaders.remove(position);
 
     }

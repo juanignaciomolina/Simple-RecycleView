@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -44,15 +43,16 @@ public class MainActivity extends Activity {
         mTestDataset.add(new RowNews("Kathryn Seawright", "I'll be in your neighborhood doing errands...", "f", true, "7m"));
 
         mNewsRecyclerViewAdapter.addAllItems(mTestDataset);
-        try {
             mNewsRecyclerViewAdapter.addLoadingRow();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            Log.d("RECYCLER", "EXCP 1");
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            Log.d("RECYCLER", "EXCP 2");
-        }
+            mNewsRecyclerViewAdapter.addLoadingRow();
+            mNewsRecyclerViewAdapter.addLoadingRow();
+            mNewsRecyclerViewAdapter.addLoadingRow();
+            mNewsRecyclerViewAdapter.addLoadingRow();
+
+            mNewsRecyclerViewAdapter.removeLastLoadingRow();
+            mNewsRecyclerViewAdapter.removeLastLoadingRow();
+            mNewsRecyclerViewAdapter.removeLastLoadingRow();
+
     }
 
 
