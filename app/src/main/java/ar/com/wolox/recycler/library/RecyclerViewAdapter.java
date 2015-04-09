@@ -1,25 +1,43 @@
 package ar.com.wolox.recycler.library;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class RecyclerViewAdapter<E> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+
+public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private ArrayList<E> mItems = new ArrayList<E>();
     private ArrayList<Integer> mLoaders = new ArrayList<>();
 
+    //The following code is used to get instances of a generic class by reflection
+    private Class<E> mItemsType;
+    private E mItemsInstance;
+    public RecyclerViewAdapter(Class<E> classType, E item)
+    {
+        this.mItemsType = classType;
+        this.mItemsInstance = item;
+    }
+    public Class<E> getItemsType(){return mItemsType;}
+
     /*********
     The custom adapter that extends this adapter MUST implement this methods
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) { return null; }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {    }
+    public  RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        return null;
+    }
 
-    **********/
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+
+    }
+
+    *********/
 
     // Return the size of your mItemsNews (invoked by the layout manager)
     @Override
@@ -73,15 +91,16 @@ public abstract class RecyclerViewAdapter<E> extends RecyclerView.Adapter<Recycl
     //** Start of LOADERS **
 
     //TODO reactivar esto cuando ande lo demas
-    /*
-    public void addLoadingRow(int position) {
-        this.addItemToPos(position, mItemsType);
+    public void addLoadingRow(int position) throws Exception {
+        this.addItemToPos(position, (E) mItemsInstance.create());
         mLoaders.add(position);
     }
 
-    public void addLoadingRow() {
-        mLoaders.add(getItemCount());
-        this.addItem(mItemsType);
+    public void addLoadingRow() throws IllegalAccessException, InstantiationException {
+        Log.d("AdapterRecycler", String.valueOf(getItemCount()));
+        this.addItem((E) mItemsInstance.create());
+        Log.d("AdapterRecycler", String.valueOf(getItemCount()));
+        mLoaders.add(getItemCount() - 1);
     }
 
     public void removeLastLoadingRow() {
@@ -108,7 +127,6 @@ public abstract class RecyclerViewAdapter<E> extends RecyclerView.Adapter<Recycl
         }
     return false;
     }
-    */
 
     //** End of LOADERS **
 

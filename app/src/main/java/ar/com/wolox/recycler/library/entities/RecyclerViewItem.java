@@ -1,14 +1,6 @@
 package ar.com.wolox.recycler.library.entities;
 
-public class RecyclerViewItem {
+public abstract class RecyclerViewItem<E> {
 
-    private boolean isLoader;
-
-    public boolean isLoader() {
-        return isLoader;
-    }
-
-    public void setLoader(boolean isLoader) {
-        this.isLoader = isLoader;
-    }
+    static <E> E create() {return null;}
 }

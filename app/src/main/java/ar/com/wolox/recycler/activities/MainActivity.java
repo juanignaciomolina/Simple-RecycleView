@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class MainActivity extends Activity {
 
         mLinearLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mNewsRecyclerViewAdapter= new NewsRecyclerViewAdapter();
+        mNewsRecyclerViewAdapter= new NewsRecyclerViewAdapter(RowNews.class, new RowNews("Nicola Dille", "I'll be in your neighborhood doing errands...", "f", true, "15m"));
         mRecyclerView.setAdapter(mNewsRecyclerViewAdapter);
         // todo customize animations extending RecyclerView.ItemAnimator class
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -43,6 +44,15 @@ public class MainActivity extends Activity {
         mTestDataset.add(new RowNews("Kathryn Seawright", "I'll be in your neighborhood doing errands...", "f", true, "7m"));
 
         mNewsRecyclerViewAdapter.addAllItems(mTestDataset);
+        try {
+            mNewsRecyclerViewAdapter.addLoadingRow();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            Log.d("RECYCLER", "EXCP 1");
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            Log.d("RECYCLER", "EXCP 2");
+        }
     }
 
 

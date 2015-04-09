@@ -1,16 +1,14 @@
 package ar.com.wolox.recycler.testclass;
 
-import ar.com.wolox.recycler.library.entities.RecyclerViewItem;
+import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
 
-public class RowNews extends RecyclerViewItem{
+public class RowNews implements RecyclerViewItemInterface<RowNews>{
 
     private String title;
     private String content;
     private String imageUrl;
     private boolean like;
     private String date;
-
-    private boolean isLoader = false;
 
     public RowNews(String title, String content, String imageUrl, boolean like, String date) {
 
@@ -19,6 +17,11 @@ public class RowNews extends RecyclerViewItem{
         this.imageUrl = imageUrl;
         this.like = like;
         this.date = date;
+    }
+
+    @Override
+    public RowNews create() {
+        return new RowNews("default", "default", "default", false, getDate());
     }
 
     public String getTitle() {
@@ -60,16 +63,5 @@ public class RowNews extends RecyclerViewItem{
     public void setDate(String date) {
         this.date = date;
     }
-
-    @Override
-    public boolean isLoader() {
-        return isLoader;
-    }
-
-    @Override
-    public void setLoader(boolean value) {
-        this.isLoader = value;
-    }
-
 
 }
