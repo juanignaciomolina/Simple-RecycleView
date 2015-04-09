@@ -97,8 +97,9 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     @SuppressWarnings("unchecked")
     public void addLoadingRow() {
-        this.addItem((E) mItemsInstance.create());
-        mLoaders.add(getItemCount() - 1);
+        int itemCount = getItemCount();
+        this.addItemToPos(itemCount,(E) mItemsInstance.create());
+        mLoaders.add(itemCount - 1);
     }
 
     public void removeLastLoadingRow() {
