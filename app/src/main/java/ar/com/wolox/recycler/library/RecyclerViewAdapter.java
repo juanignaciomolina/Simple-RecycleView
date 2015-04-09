@@ -1,7 +1,6 @@
 package ar.com.wolox.recycler.library;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,17 +10,17 @@ import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
 public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private ArrayList<E> mItems = new ArrayList<E>();
-    private ArrayList<Integer> mLoaders = new ArrayList<>();
+    private ArrayList<Integer> mLoaders = new ArrayList<Integer>();
 
     //The following code is used to get instances of a generic class by reflection
-    private Class<E> mItemsType;
+    //private Class<E> mItemsType;
     private E mItemsInstance;
     public RecyclerViewAdapter(Class<E> classType, E item)
     {
-        this.mItemsType = classType;
+        //this.mItemsType = classType;
         this.mItemsInstance = item;
     }
-    public Class<E> getItemsType(){return mItemsType;}
+    //public Class<E> getItemsType(){return mItemsType;}
 
     /*********
     The custom adapter that extends this adapter MUST implement this methods
@@ -96,9 +95,7 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     }
 
     public void addLoadingRow() {
-        Log.d("AdapterRecycler", String.valueOf(getItemCount()));
         this.addItem((E) mItemsInstance.create());
-        Log.d("AdapterRecycler", String.valueOf(getItemCount()));
         mLoaders.add(getItemCount() - 1);
     }
 
@@ -116,8 +113,11 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     }
 
     protected void removeLoadingRowByPos(int position) {
-        mLoaders.remove(position);
-
+        int posInItems = mLoaders.get(position);
+        if (posInItems >= 0) {
+            mItems.remove(posInItems);
+            mLoaders.remove(position);
+        }
     }
 
     public boolean isLoader(int position) {
