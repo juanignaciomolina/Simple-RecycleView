@@ -9,15 +9,12 @@ import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
 
 public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private ArrayList<E> mItems = new ArrayList<E>();
-    private ArrayList<Integer> mLoaders = new ArrayList<Integer>();
+    private ArrayList<E> mItems = new ArrayList<E>(); //List of items for the recycler
+    private ArrayList<Integer> mLoaders = new ArrayList<Integer>(); //List of item's positions
 
-    //The following code is used to get instances of a generic class by reflection
-    //private Class<E> mItemsType;
     private E mItemsInstance;
-    public RecyclerViewAdapter(Class<E> classType, E item)
+    public RecyclerViewAdapter(E item)
     {
-        //this.mItemsType = classType;
         this.mItemsInstance = item;
     }
     //public Class<E> getItemsType(){return mItemsType;}
@@ -56,8 +53,10 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     }
 
     public void addItemToPos(int position, E item) {
-        mItems.add(position, item);
-        notifyItemInserted(position);
+        if (position <= getItemCount()) {
+            mItems.add(position, item);
+            notifyItemInserted(position);
+        }
     }
 
     public void addAllItems(Collection<E> itemsArray) {
@@ -90,36 +89,49 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     //** Start of LOADERS **
 
     @SuppressWarnings("unchecked")
-    public void addLoadingRow(int position) {
-        this.addItemToPos(position, (E) mItemsInstance.create());
-        mLoaders.add(position);
-    }
-
-    @SuppressWarnings("unchecked")
     public void addLoadingRow() {
         int itemCount = getItemCount();
         this.addItemToPos(itemCount,(E) mItemsInstance.create());
-        mLoaders.add(itemCount - 1);
+        mLoaders.add(itemCount);
     }
 
-    public void removeLastLoadingRow() {
-        removeLoadingRowByPos(mLoaders.size() - 1);
+    @SuppressWarnings("unchecked")
+    public void addLoadingRow(int position) {
+        this.addItemToPos(position, (E) mItemsInstance.create());
+        //Ordered list
+        int insertPos = mLoaders.indexOf(position);
+        if (insertPos >= 0) {
+            updateLoadersPosition(insertPos + 1, mLoaders.size() - 1, +1);
+            mLoaders.add(insertPos, position);
+        }
+        else mLoaders.add(position);
     }
 
-    public void removeLoadingRow(int position) {
-        int loaderPosition = mLoaders.get(position);
-        if (loaderPosition >= 0)
-        {
-            removeItemByPos(loaderPosition);
-            removeLoadingRowByPos(position);
+    public void removeLoadingRow() {
+        removeLoadingRowByLoaderPos(mLoaders.size() - 1);
+    }
+
+    public void removeLoadingRow(int itemPosition) {
+        removeLoadingRowByLoaderPos(mLoaders.lastIndexOf(itemPosition));
+    }
+
+    protected void removeLoadingRowByLoaderPos(int loaderPosition) {
+        int itemPosition = mLoaders.get(loaderPosition);
+        if (itemPosition >= 0 && isLoader(itemPosition)) {
+            removeItemByPos(itemPosition);
+            updateLoadersPosition(loaderPosition, mLoaders.size() - 1, -1);
+            mLoaders.remove(loaderPosition);
         }
     }
 
-    protected void removeLoadingRowByPos(int position) {
-        int posInItems = mLoaders.get(position);
-        if (posInItems >= 0) {
-            mItems.remove(posInItems);
-            mLoaders.remove(position);
+    private void updateLoadersPosition(int start, int end, int value) {
+        if ( start < 0 || end > mLoaders.size() ) return;
+
+        int i = start;
+
+        while ( i <= end ) {
+            mLoaders.set(i, mLoaders.get(i) + value);
+            i++;
         }
     }
 

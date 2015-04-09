@@ -14,8 +14,8 @@ public class NewsRecyclerViewAdapter extends RecyclerViewAdapter<RowNews> {
 
     private NewsRowViewHolder mNewsRowViewHolder;
 
-    public NewsRecyclerViewAdapter(Class<RowNews> cls, RowNews item) {
-        super(cls, item);
+    public NewsRecyclerViewAdapter(RowNews item) {
+        super(item);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class NewsRecyclerViewAdapter extends RecyclerViewAdapter<RowNews> {
 
                 mNewsRowViewHolder = (NewsRowViewHolder) viewHolder;
                 //mNewsRowViewHolder.mTitle.setText(getItems().get(position).getTitle());
-                mNewsRowViewHolder.mTitle.setText("TEST");
+                mNewsRowViewHolder.mTitle.setText(getItems().get(position).getTitle());
                 //mNewsRowViewHolder.mContent.setText(getItems().get(position).getText());
-                mNewsRowViewHolder.mContent.setText("HOLAA!!!");
+                mNewsRowViewHolder.mContent.setText(getItems().get(position).getContent());
                 mNewsRowViewHolder.mDate.setText("23m");
                 break;
 
