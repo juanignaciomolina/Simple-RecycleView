@@ -18,7 +18,6 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     {
         this.mItemsInstance = item;
     }
-    //public Class<E> getItemsType(){return mItemsType;}
 
     /*********
     The custom adapter that extends this adapter MUST implement this methods
@@ -36,7 +35,7 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     *********/
 
-    // Return the size of your mItemsNews (invoked by the layout manager)
+    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() { return mItems.size(); }
 

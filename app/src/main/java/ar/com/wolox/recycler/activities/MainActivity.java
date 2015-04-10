@@ -36,12 +36,14 @@ public class MainActivity extends Activity {
         // todo customize animations extending RecyclerView.ItemAnimator class
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //** TEST DATASET
         mTestDataset.add(new RowNews("Nicola Dille", "I'll be in your neighborhood doing errands...", "f", true, "15m"));
         mTestDataset.add(new RowNews("Carmelina Teston", "I'll be in your neighborhood doing errands...", "f", false, "18m"));
         mTestDataset.add(new RowNews("Sanford Hamrick", "I'll be in your neighborhood doing errands...", "f", true, "32m"));
         mTestDataset.add(new RowNews("Brendan Nemeth", "I'll be in your neighborhood doing errands...", "f", true, "9m"));
         mTestDataset.add(new RowNews("Kathryn Seawright", "I'll be in your neighborhood doing errands...", "f", true, "7m"));
 
+        //** METHOD TESTS
         mNewsRecyclerViewAdapter.addAllItems(mTestDataset);
 
         mNewsRecyclerViewAdapter.addLoadingRow();
@@ -50,6 +52,8 @@ public class MainActivity extends Activity {
 
         mNewsRecyclerViewAdapter.addLoadingRow();
         mNewsRecyclerViewAdapter.addLoadingRow(0);
+
+        mNewsRecyclerViewAdapter.moveItem(1,2);
 
 
     }
