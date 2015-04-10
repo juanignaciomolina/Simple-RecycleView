@@ -44,40 +44,13 @@ public class MainActivity extends Activity {
 
         mNewsRecyclerViewAdapter.addAllItems(mTestDataset);
 
-        mNewsRecyclerViewAdapter.addLoadingRow(2);
-        mNewsRecyclerViewAdapter.addLoadingRow(3);
-        //mNewsRecyclerViewAdapter.removeLoadingRow(2);
-        //mNewsRecyclerViewAdapter.removeLoadingRow(2);
-
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-
-        //mNewsRecyclerViewAdapter.removeLoadingRow();
-        //mNewsRecyclerViewAdapter.removeLoadingRow();
-        //mNewsRecyclerViewAdapter.removeLoadingRow();
-
-
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-        //mNewsRecyclerViewAdapter.addLoadingRow();
-
-        //mNewsRecyclerViewAdapter.removeLoadingRow();
+        mNewsRecyclerViewAdapter.addLoadingRow();
 
         mNewsRecyclerViewAdapter.addAllItems(mTestDataset);
 
-        //mNewsRecyclerViewAdapter.addLoadingRow();
+        mNewsRecyclerViewAdapter.addLoadingRow();
         mNewsRecyclerViewAdapter.addLoadingRow(0);
-        mNewsRecyclerViewAdapter.addLoadingRow(1);
-        mNewsRecyclerViewAdapter.addLoadingRow(1);
-        mNewsRecyclerViewAdapter.addLoadingRow(4);
-        mNewsRecyclerViewAdapter.addLoadingRow(4);
-        mNewsRecyclerViewAdapter.addLoadingRow(4);
-        mNewsRecyclerViewAdapter.addLoadingRow(7);
 
-        mNewsRecyclerViewAdapter.removeLoadingRow(0);
-        mNewsRecyclerViewAdapter.removeLoadingRow(60);
 
     }
 

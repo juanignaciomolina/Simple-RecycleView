@@ -91,25 +91,13 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     @SuppressWarnings("unchecked")
     public void addLoadingRow() {
-        int itemCount = getItemCount();
-        this.addItemToPos(itemCount,(E) mItemsInstance.create());
-        mLoaders.add(itemCount);
+        addLoadingRow(mItems.size());
     }
 
     @SuppressWarnings("unchecked")
     public void addLoadingRow(int position) {
         insertOrderedRow(mLoaders, position);
-        //mLoaders.add(position);
-        //quicksort(mLoaders);
-        //updateLoadersPosition(mLoaders.indexOf(position) + 1, mLoaders.size() - 1 , +1);
         this.addItemToPos(position, (E) mItemsInstance.create());
-        //Ordered list
-        //int insertPos = mLoaders.indexOf(position);
-        //if (insertPos >= 0) {
-        //    updateLoadersPosition(insertPos + 1, mLoaders.size() - 1, +1);
-        //    mLoaders.add(insertPos, position);
-        //}
-        //else mLoaders.add(position);
     }
 
     public void removeLoadingRow() {
@@ -117,7 +105,7 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
     }
 
     public void removeLoadingRow(int itemPosition) {
-        removeLoadingRowByLoaderPos(mLoaders.lastIndexOf(itemPosition));
+        removeLoadingRowByLoaderPos(mLoaders.indexOf(itemPosition));
     }
 
     protected void removeLoadingRowByLoaderPos(int loaderPosition) {
@@ -125,19 +113,6 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
         if (itemPosition >= 0 && isLoader(itemPosition)) {
             removeOrderedRow(mLoaders, loaderPosition);
             removeItemByPos(itemPosition);
-            //updateLoadersPosition(loaderPosition, mLoaders.size() - 1, -1);
-            //mLoaders.remove(loaderPosition);
-        }
-    }
-
-    private void updateLoadersPosition(int start, int end, int value) {
-        if ( start < 0 || end >= mLoaders.size() ) return;
-
-        int i = start;
-
-        while ( i <= end ) {
-            mLoaders.set(i, mLoaders.get(i) + value);
-            i++;
         }
     }
 
@@ -189,65 +164,5 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
         return positionToRemove;
     }
 
-    /**
-     * This method sort the input ArrayList using quick sort algorithm.
-     * @param input the ArrayList of integers.
-     * @return sorted ArrayList of integers.
-     */
-    /*
-    private ArrayList<Integer> quicksort(ArrayList<Integer> input){
-
-        if(input.size() <= 1){
-            return input;
-        }
-
-        int middle = (int) Math.ceil((double)input.size() / 2);
-        int pivot = input.get(middle);
-
-        ArrayList<Integer> less = new ArrayList<Integer>();
-        ArrayList<Integer> greater = new ArrayList<Integer>();
-
-        for (int i = 0; i < input.size(); i++) {
-            if(input.get(i) <= pivot){
-                if(i == middle){
-                    continue;
-                }
-                less.add(input.get(i));
-            }
-            else{
-                greater.add(input.get(i));
-            }
-        }
-
-        return concatenate(quicksort(less), pivot, quicksort(greater));
-    }
-    */
-
-    /**
-     * Join the less array, pivot integer, and greater array
-     * to single array.
-     * @param less integer ArrayList with values less than pivot.
-     * @param pivot the pivot integer.
-     * @param greater integer ArrayList with values greater than pivot.
-     * @return the integer ArrayList after join.
-     */
-    /*
-    private ArrayList<Integer> concatenate(ArrayList<Integer> less, int pivot, ArrayList<Integer> greater){
-
-        ArrayList<Integer> list = new ArrayList<Integer>();
-
-        for (int i = 0; i < less.size(); i++) {
-            list.add(less.get(i));
-        }
-
-        list.add(pivot);
-
-        for (int i = 0; i < greater.size(); i++) {
-            list.add(greater.get(i));
-        }
-
-        return list;
-    }
-    */
     //** End of UTILS **
 }
