@@ -1,7 +1,6 @@
 package ar.com.wolox.recycler.testclass;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class NewsRecyclerViewAdapter extends RecyclerViewAdapter<RowNews> {
             int viewType) {
 
         View itemLayoutView;
-        Log.d("Adapter", String.valueOf(viewType));
 
         switch (viewType) {
             default:
