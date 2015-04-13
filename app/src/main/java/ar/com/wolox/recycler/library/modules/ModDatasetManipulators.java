@@ -5,12 +5,21 @@ import java.util.Collection;
 import ar.com.wolox.recycler.library.RecyclerViewAdapter;
 import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
 
-public class ModuleDatasetManipulators<E extends RecyclerViewItemInterface>
-        implements ModuleDatasetManipulatorsInt<E>{
+public class ModDatasetManipulators<E extends RecyclerViewItemInterface>{
+
+    public interface Interface<E> {
+        public void addItem(E item);
+        public void addItemToPos(int position, E item);
+        public void addAllItems(Collection<E> itemsArray);
+        public void removeItemByPos(int position);
+        public int getItemPosition(E itemToLocate);
+        public void removeItem(E itemToRemove);
+        public void moveItem(int fromPos, int toPos);
+    }
 
     RecyclerViewAdapter<E> mRecyclerViewAdapter;
 
-    public ModuleDatasetManipulators(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
+    public ModDatasetManipulators(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
         this.mRecyclerViewAdapter = aRecyclerViewAdapter;
     }
 

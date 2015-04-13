@@ -66,5 +66,4 @@ public class NewsRecyclerViewAdapter extends RecyclerViewAdapter<RowNews> {
         }
     }
 
-
 }
