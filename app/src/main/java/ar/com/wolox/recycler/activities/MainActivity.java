@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 
         mRecyclerView = (RecyclerView) this.findViewById(R.id.recycler_view);
 
-
         mLinearLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mNewsRecyclerViewAdapter= new NewsRecyclerViewAdapter(new RowNews("Nicola Dille", "I'll be in your neighborhood doing errands...", "f", true, "15m"));
@@ -54,9 +53,5 @@ public class MainActivity extends Activity {
         mNewsRecyclerViewAdapter.addLoadingRow(0);
 
         mNewsRecyclerViewAdapter.moveItem(1,2);
-
-
     }
-
-
 }

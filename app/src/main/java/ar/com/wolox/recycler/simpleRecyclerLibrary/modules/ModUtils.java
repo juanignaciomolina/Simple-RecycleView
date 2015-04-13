@@ -1,25 +1,28 @@
-package ar.com.wolox.recycler.library.modules;
+package ar.com.wolox.recycler.simpleRecyclerLibrary.modules;
 
 import android.util.Log;
 
 import java.util.ArrayList;
 
-import ar.com.wolox.recycler.library.RecyclerViewAdapter;
-import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.SimpleRecyclerAdapter;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.entities.SimpleRecyclerItemInterface;
 
-public class ModUtils<E extends RecyclerViewItemInterface> {
+public class ModUtils<E extends SimpleRecyclerItemInterface> {
 
     public interface Interface<E> {
         public int insertOrderedRow(ArrayList<Integer> itemsList, int value);
         public int removeOrderedRow(ArrayList<Integer> itemsList, int positionToRemove);
     }
 
-    RecyclerViewAdapter<E> mRecyclerViewAdapter;
+    //Vars
+    SimpleRecyclerAdapter<E> mRecyclerViewAdapter;
 
-    public ModUtils(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
+    //Constructor
+    public ModUtils(SimpleRecyclerAdapter<E> aRecyclerViewAdapter) {
         this.mRecyclerViewAdapter = aRecyclerViewAdapter;
     }
 
+    //** Start of UTILS MODULE methods **
     public static int insertOrderedRow(ArrayList<Integer> itemsList, int value){
         int i = 0;
         int size = itemsList.size();
@@ -56,5 +59,5 @@ public class ModUtils<E extends RecyclerViewItemInterface> {
         Log.d("Loaders array -", String.valueOf(itemsList));
         return positionToRemove;
     }
-
+    //** End of UTILS MODULE methods **
 }

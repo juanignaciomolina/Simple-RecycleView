@@ -1,9 +1,9 @@
-package ar.com.wolox.recycler.library;
+package ar.com.wolox.recycler.simpleRecyclerLibrary;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 
-public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class SimpleRecyclerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
 
     public static final int ITEMS_PER_PAGE = 20;

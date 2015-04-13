@@ -1,4 +1,4 @@
-package ar.com.wolox.recycler.library.entities;
+package ar.com.wolox.recycler.simpleRecyclerLibrary.entities;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

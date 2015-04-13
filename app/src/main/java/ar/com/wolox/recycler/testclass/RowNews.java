@@ -1,8 +1,8 @@
 package ar.com.wolox.recycler.testclass;
 
-import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.entities.SimpleRecyclerItemInterface;
 
-public class RowNews implements RecyclerViewItemInterface<RowNews>{
+public class RowNews implements SimpleRecyclerItemInterface<RowNews> {
 
     private String title;
     private String content;

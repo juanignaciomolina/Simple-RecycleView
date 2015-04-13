@@ -1,11 +1,11 @@
-package ar.com.wolox.recycler.library.modules;
+package ar.com.wolox.recycler.simpleRecyclerLibrary.modules;
 
 import java.util.Collection;
 
-import ar.com.wolox.recycler.library.RecyclerViewAdapter;
-import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.SimpleRecyclerAdapter;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.entities.SimpleRecyclerItemInterface;
 
-public class ModDatasetManipulators<E extends RecyclerViewItemInterface>{
+public class ModDatasetManipulators<E extends SimpleRecyclerItemInterface>{
 
     public interface Interface<E> {
         public void addItem(E item);
@@ -17,20 +17,24 @@ public class ModDatasetManipulators<E extends RecyclerViewItemInterface>{
         public void moveItem(int fromPos, int toPos);
     }
 
-    RecyclerViewAdapter<E> mRecyclerViewAdapter;
+    //Vars
+    SimpleRecyclerAdapter<E> mRecyclerViewAdapter;
 
-    public ModDatasetManipulators(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
+    //Constructor
+    public ModDatasetManipulators(SimpleRecyclerAdapter<E> aRecyclerViewAdapter) {
         this.mRecyclerViewAdapter = aRecyclerViewAdapter;
     }
 
-    public RecyclerViewAdapter<E> getRecyclerViewAdapter() {
+    // Getters and Setters
+    public SimpleRecyclerAdapter<E> getRecyclerViewAdapter() {
         return mRecyclerViewAdapter;
     }
 
-    public void setRecyclerViewAdapter(RecyclerViewAdapter<E> mRecyclerViewAdapter) {
+    public void setRecyclerViewAdapter(SimpleRecyclerAdapter<E> mRecyclerViewAdapter) {
         this.mRecyclerViewAdapter = mRecyclerViewAdapter;
     }
 
+    //** Start of DATASET MANIPULATORS MODULE methods **
     public void addItem(E item) {
         addItemToPos(mRecyclerViewAdapter.getItemCount(), item);
     }
@@ -66,5 +70,5 @@ public class ModDatasetManipulators<E extends RecyclerViewItemInterface>{
         E temp = mRecyclerViewAdapter.getItems().remove(fromPos);
         mRecyclerViewAdapter.getItems().add(toPos, temp);
     }
-
+    //** End of DATASET MANIPULATORS MODULE methods **
 }

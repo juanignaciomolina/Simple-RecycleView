@@ -1,11 +1,12 @@
-package ar.com.wolox.recycler.library.modules;
+package ar.com.wolox.recycler.simpleRecyclerLibrary.modules;
 
 import java.util.ArrayList;
 
-import ar.com.wolox.recycler.library.RecyclerViewAdapter;
-import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+import ar.com.wolox.recycler.R;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.SimpleRecyclerAdapter;
+import ar.com.wolox.recycler.simpleRecyclerLibrary.entities.SimpleRecyclerItemInterface;
 
-public class ModLoaders<E extends RecyclerViewItemInterface> extends ModDatasetManipulators<E> {
+public class ModLoaders<E extends SimpleRecyclerItemInterface> extends ModDatasetManipulators<E> {
 
     public interface Interface<E> {
         public void addLoadingRow();
@@ -16,12 +17,20 @@ public class ModLoaders<E extends RecyclerViewItemInterface> extends ModDatasetM
         public boolean isLoader(int position);
     }
 
+    //Vars
     private ArrayList<Integer> mLoaders = new ArrayList<Integer>(); //List of item's positions
+    private int mLoaderLayout = R.layout.item_loading;
 
-    public ModLoaders(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
+    //Constructor
+    public ModLoaders(SimpleRecyclerAdapter<E> aRecyclerViewAdapter) {
         super(aRecyclerViewAdapter);
     }
 
+    //Getters and Setters
+    public int getLoaderLayout() {return mLoaderLayout;}
+    public void setLoaderLayout(int loaderLayout) { this.mLoaderLayout = loaderLayout;}
+
+    //** Start of LOADERS MODULE methods **
     public void addLoadingRow() {
         addLoadingRow(super.getRecyclerViewAdapter().getItems().size());
     }
@@ -54,5 +63,5 @@ public class ModLoaders<E extends RecyclerViewItemInterface> extends ModDatasetM
         }
         return false;
     }
-
+    //** End of LOADERS MODULE methods **
 }
