@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ar.com.wolox.recycler.library.RecyclerViewAdapter;
 import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
 
-public class ModLoaders<E extends RecyclerViewItemInterface> {
+public class ModLoaders<E extends RecyclerViewItemInterface> extends ModDatasetManipulators<E> {
 
     public interface Interface<E> {
         public void addLoadingRow();
@@ -16,21 +16,20 @@ public class ModLoaders<E extends RecyclerViewItemInterface> {
         public boolean isLoader(int position);
     }
 
-    RecyclerViewAdapter<E> mRecyclerViewAdapter;
     private ArrayList<Integer> mLoaders = new ArrayList<Integer>(); //List of item's positions
 
     public ModLoaders(RecyclerViewAdapter<E> aRecyclerViewAdapter) {
-        this.mRecyclerViewAdapter = aRecyclerViewAdapter;
+        super(aRecyclerViewAdapter);
     }
 
     public void addLoadingRow() {
-        addLoadingRow(mRecyclerViewAdapter.getItems().size());
+        addLoadingRow(super.getRecyclerViewAdapter().getItems().size());
     }
 
     @SuppressWarnings("unchecked")
     public void addLoadingRow(int position) {
         ModUtils.insertOrderedRow(mLoaders, position);
-        mRecyclerViewAdapter.addItemToPos(position, (E) mRecyclerViewAdapter.getItemsInstance().create());
+        super.addItemToPos(position, (E) super.getRecyclerViewAdapter().getItemsInstance().create());
     }
 
     public void removeLoadingRow() {
@@ -45,7 +44,7 @@ public class ModLoaders<E extends RecyclerViewItemInterface> {
         int itemPosition = mLoaders.get(loaderPosition);
         if (itemPosition >= 0 && isLoader(itemPosition)) {
             ModUtils.removeOrderedRow(mLoaders, loaderPosition);
-            mRecyclerViewAdapter.removeItemByPos(itemPosition);
+            super.removeItemByPos(itemPosition);
         }
     }
 

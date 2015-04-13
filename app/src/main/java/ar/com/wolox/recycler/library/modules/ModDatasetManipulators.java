@@ -23,6 +23,14 @@ public class ModDatasetManipulators<E extends RecyclerViewItemInterface>{
         this.mRecyclerViewAdapter = aRecyclerViewAdapter;
     }
 
+    public RecyclerViewAdapter<E> getRecyclerViewAdapter() {
+        return mRecyclerViewAdapter;
+    }
+
+    public void setRecyclerViewAdapter(RecyclerViewAdapter<E> mRecyclerViewAdapter) {
+        this.mRecyclerViewAdapter = mRecyclerViewAdapter;
+    }
+
     public void addItem(E item) {
         addItemToPos(mRecyclerViewAdapter.getItemCount(), item);
     }
