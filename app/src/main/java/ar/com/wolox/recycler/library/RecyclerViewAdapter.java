@@ -1,19 +1,32 @@
 package ar.com.wolox.recycler.library;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import ar.com.wolox.recycler.library.entities.RecyclerViewItemInterface;
+import ar.com.wolox.recycler.library.modules.ModuleDatasetManipulators;
+import ar.com.wolox.recycler.library.modules.ModuleDatasetManipulatorsInt;
+import ar.com.wolox.recycler.library.modules.ModuleLoaders;
+import ar.com.wolox.recycler.library.modules.ModuleLoadersInt;
+import ar.com.wolox.recycler.library.modules.ModuleUtils;
+import ar.com.wolox.recycler.library.modules.ModuleUtilsInt;
 
-public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface>
+        extends
+        RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements
+        ModuleUtilsInt<E>,
+        ModuleDatasetManipulatorsInt<E>,
+        ModuleLoadersInt<E>
+{
 
     private ArrayList<E> mItems = new ArrayList<E>(); //List of items for the recycler
-    private ArrayList<Integer> mLoaders = new ArrayList<Integer>(); //List of item's positions
-
+    //private ArrayList<Integer> mLoaders = new ArrayList<Integer>(); //List of item's positions
     private E mItemsInstance;
+
+    //Constructor
     public RecyclerViewAdapter(E item)
     {
         this.mItemsInstance = item;
@@ -37,131 +50,51 @@ public abstract class RecyclerViewAdapter<E extends RecyclerViewItemInterface> e
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
-    public int getItemCount() { return mItems.size(); }
+    public int getItemCount() {return mItems.size();}
 
+    //Getters and Setters
     public ArrayList<E> getItems() {
         return mItems;
     }
-
     public void setItems(ArrayList<E> mItems) {
         this.mItems = mItems;
     }
+    public E getItemsInstance() {return mItemsInstance;}
+
+
+    //** Start of UTILS **
+    private ModuleUtils<E> mModuleUtils = new ModuleUtils<>(this);
+    public ModuleUtils<E> getModuleUtils() {return mModuleUtils;}
+
+    public int insertOrderedRow(ArrayList<Integer> itemsList, int value){
+        return mModuleUtils.insertOrderedRow(itemsList, value); }
+    public int removeOrderedRow(ArrayList<Integer> itemsList, int positionToRemove) {
+        return mModuleUtils.removeOrderedRow(itemsList, positionToRemove);}
+    //** End of UTILS **
 
     //** Start of DATASET MANIPULATORS **
-    public void addItem(E item) {
-        addItemToPos(getItemCount(), item);
-    }
+    private ModuleDatasetManipulators<E> mModuleDatasetManipulators = new ModuleDatasetManipulators<E>(this);
+    protected ModuleDatasetManipulators<E> getModuleDatasetManipulators() { return mModuleDatasetManipulators; }
 
-    public void addItemToPos(int position, E item) {
-        if (position <= getItemCount()) {
-            mItems.add(position, item);
-            notifyItemInserted(position);
-        }
-    }
-
-    public void addAllItems(Collection<E> itemsArray) {
-        for(E item : itemsArray) {
-            addItem(item);
-        }
-    }
-
-    public void removeItemByPos(int position) {
-        mItems.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public int getItemPosition(E itemToLocate) {
-        return mItems.indexOf(itemToLocate);
-    }
-
-    public void removeItem(E itemToRemove) {
-        int position = getItemPosition(itemToRemove);
-        if (position >= 0) removeItemByPos(position);
-    }
-
-    public void moveItem(int fromPos, int toPos) {
-        E temp = mItems.remove(fromPos);
-        mItems.add(toPos, temp);
-    }
-
+    public void addItem(E item) {mModuleDatasetManipulators.addItem(item);}
+    public void addItemToPos(int position, E item) {mModuleDatasetManipulators.addItemToPos(position, item);}
+    public void addAllItems(Collection<E> itemsArray) {mModuleDatasetManipulators.addAllItems(itemsArray);}
+    public void removeItemByPos(int position) {mModuleDatasetManipulators.removeItemByPos(position);}
+    public int getItemPosition(E itemToLocate) {return mModuleDatasetManipulators.getItemPosition(itemToLocate);}
+    public void removeItem(E itemToRemove) {mModuleDatasetManipulators.removeItem(itemToRemove);}
+    public void moveItem(int fromPos, int toPos) {mModuleDatasetManipulators.moveItem(fromPos, toPos);}
     //** End of DATASET MANIPULATORS **
 
     //** Start of LOADERS **
+    private ModuleLoaders<E> mModuleLoaders = new ModuleLoaders<E>(this);
+    public ModuleLoaders<E> getModuleLoaders() { return mModuleLoaders; }
 
-    @SuppressWarnings("unchecked")
-    public void addLoadingRow() {
-        addLoadingRow(mItems.size());
-    }
-
-    @SuppressWarnings("unchecked")
-    public void addLoadingRow(int position) {
-        insertOrderedRow(mLoaders, position);
-        this.addItemToPos(position, (E) mItemsInstance.create());
-    }
-
-    public void removeLoadingRow() {
-        removeLoadingRowByLoaderPos(mLoaders.size() - 1);
-    }
-
-    public void removeLoadingRow(int itemPosition) {
-        removeLoadingRowByLoaderPos(mLoaders.indexOf(itemPosition));
-    }
-
-    protected void removeLoadingRowByLoaderPos(int loaderPosition) {
-        int itemPosition = mLoaders.get(loaderPosition);
-        if (itemPosition >= 0 && isLoader(itemPosition)) {
-            removeOrderedRow(mLoaders, loaderPosition);
-            removeItemByPos(itemPosition);
-        }
-    }
-
-    public boolean isLoader(int position) {
-        for(int aLoaderPosition : mLoaders) {
-            if (aLoaderPosition == position) return true;
-        }
-    return false;
-    }
-
+    public void addLoadingRow() {mModuleLoaders.addLoadingRow();}
+    public void addLoadingRow(int position) {mModuleLoaders.addLoadingRow(position);}
+    public void removeLoadingRow() {mModuleLoaders.removeLoadingRow();}
+    public void removeLoadingRow(int itemPosition) {mModuleLoaders.removeLoadingRow(itemPosition);}
+    public void removeLoadingRowByLoaderPos(int loaderPosition) {mModuleLoaders.removeLoadingRowByLoaderPos(loaderPosition);}
+    public boolean isLoader(int position) {return mModuleLoaders.isLoader(position);}
     //** End of LOADERS **
 
-    //** Start of UTILS **
-
-    private int insertOrderedRow(ArrayList<Integer> itemsList, int value){
-        int i = 0;
-        int size = itemsList.size();
-        while(i < size && itemsList.get(i) < value){
-            i++;
-        }
-        if(i < size){
-
-            itemsList.add(itemsList.get(size - 1) + 1);
-
-            for(int j = size - 1; j > i; j--){
-                itemsList.set(j, itemsList.get(j - 1) + 1); //+1 because there is a new row
-            }
-            itemsList.set(i, value);
-        }
-        else itemsList.add(value);
-
-        Log.d("Loaders array +", String.valueOf(itemsList));
-        return i;
-    }
-
-    private int removeOrderedRow(ArrayList<Integer> itemsList, int positionToRemove) {
-        int size = itemsList.size();
-
-        if(positionToRemove < size && positionToRemove >= 0){
-            for(int j = size - 1; j > positionToRemove; j--){
-                itemsList.set(j, itemsList.get(j) - 1); //-1 because there is one less row
-            }
-
-            itemsList.remove(positionToRemove);
-        }
-        else return -1;
-
-        Log.d("Loaders array -", String.valueOf(itemsList));
-        return positionToRemove;
-    }
-
-    //** End of UTILS **
 }
